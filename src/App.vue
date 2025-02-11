@@ -3,5 +3,14 @@ import SeatSelector from './components/SeatSelector.vue';
 </script>
 
 <template>
-  <SeatSelector></SeatSelector>
+  <div class="container">
+    <SeatSelector></SeatSelector>
+  </div>
 </template>
+<style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
