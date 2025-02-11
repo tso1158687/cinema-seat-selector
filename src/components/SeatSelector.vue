@@ -3,12 +3,15 @@ import { storeToRefs } from 'pinia';
 import { useSeatStore } from '../stores/seat.store';
 import { ref, computed } from 'vue';
 const seatStore = useSeatStore()
-const { currentSelectedSeat, seatConfig, soldSeats } = storeToRefs(seatStore)
+const { seatConfig, soldSeats } = storeToRefs(seatStore)
 const selectedSeat = ref<string | null>(null);
-const soldSeatsToString = computed(() => soldSeats.value.map(([r, c]) => `${r}-${c}`))
-console.log('sold seats', soldSeats.value)
-// const isSold = (row:number, col:number) => soldSeats.has(`${row}-${col}`);
-const isSold = (row: number, col: number) => false;
+const convertedSoldSeats = computed(() => {
+    return soldSeats.value.map(([r, c]) => `${r}-${c}`)
+})
+const isSold = (row: number, col: number): boolean => {
+    const stringSeat = `${row}-${col}`
+    return convertedSoldSeats.value.includes(stringSeat)
+};
 
 const selectSeat = (row: number, col: number) => {
     if (!isSold(row, col)) {
@@ -16,7 +19,11 @@ const selectSeat = (row: number, col: number) => {
     }
 };
 
-console.log(seatConfig.value)
+function hasAsile(col: number): boolean {
+    console.log(col)
+    return seatConfig.value.aisleIndexes.includes(col)
+}
+
 
 </script>
 <template>
@@ -39,8 +46,9 @@ console.log(seatConfig.value)
         <div class="seat-list">
             <div v-for="row in seatConfig.rows" :key="row" class="row">
                 <div v-for="col in seatConfig.cols" :key="col" :class="['seat',
-                    isSold(row, col) ? 'sold' : '',
-                    selectedSeat === `${row}-${col}` ? 'selected' : '']" @click="selectSeat(row, col)"></div>
+                    isSold(row, col) ? 'sold cursor-not-allowed' : '',
+                    selectedSeat === `${row}-${col}` ? 'selected' : '',
+                    hasAsile(col) ? 'asile' : '']" @click="selectSeat(row, col)"></div>
             </div>
         </div>
     </div>
@@ -54,22 +62,39 @@ console.log(seatConfig.value)
     align-items: center;
 }
 
+.seat {
+    margin: 4px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.cursor-not-allowed {
+    cursor: not-allowed;
+}
+
 .row {
     display: flex;
 }
 
+.asile {
+    margin-right: 18px;
+}
+
 .container {
     width: 472px;
-    border: 4px solid gray;
+    border: 4px solid #dddddd;
     flex-direction: column;
-    padding-top: 32px;
-    padding-bottom: 32px;
+    padding: 32px 30px;
+
 }
 
 .title {
     text-align: center;
     font-size: 24px;
-    font-weight: bold;
+    justify-content: flex-start;
+    display: flex;
+    width: 100%;
+    margin-bottom: 48px;
 
 
 }
@@ -79,12 +104,22 @@ console.log(seatConfig.value)
     justify-content: center;
     align-items: center;
     margin-top: 10px;
+    font-size: 12px;
+
 }
 
 .legend {
-    display: flex;
     align-items: center;
     margin-right: 10px;
-    flex: 1;
+    display: flex;
+}
+
+.screen {
+    display: flex;
+    border: 1px solid #dddddd;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 32px;
+    margin-top: 32px;
 }
 </style>
