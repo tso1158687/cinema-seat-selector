@@ -1,4 +1,4 @@
-.dot {
+.seat {
   $primary: #15964e;
   $secondary: #dddddd;
   display: block;
@@ -6,17 +6,14 @@
   height: 16px;
   border-radius: 50%;
   border: 2px solid;
+  border-color: $secondary;
 
-  &.current-seat {
+  &.selected {
     background-color: $primary;
     border-color: $primary;
   }
 
-  &.available {
-    border-color: $secondary;
-  }
-
-  &.reserved {
+  &.sold {
     background-color: $secondary;
     border-color: $secondary;
   }
