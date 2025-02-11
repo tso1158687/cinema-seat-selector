@@ -1,0 +1,23 @@
+.dot {
+  $primary: #15964e;
+  $secondary: #dddddd;
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid;
+
+  &.current-seat {
+    background-color: $primary;
+    border-color: $primary;
+  }
+
+  &.available {
+    border-color: $secondary;
+  }
+
+  &.reserved {
+    background-color: $secondary;
+    border-color: $secondary;
+  }
+}

@@ -5,18 +5,20 @@
         <div class="title">請選擇觀看電影的座位</div>
         <div class="legend-area">
             <div class="legend">
-                <div class="dot"></div><span>您的座位</span>
+                <div class="dot current-seat"></div><span>您的座位</span>
             </div>
             <div class="legend">
-                <div class="dot"></div><span>未售出</span>
+                <div class="dot available"></div><span>未售出</span>
             </div>
             <div class="legend">
-                <div class="dot"></div><span>已售出</span>
+                <div class="dot reserved"></div><span>已售出</span>
             </div>
         </div>
     </div>
 </template>
-<style scoped>
+<style scoped lang="scss">
+@use "../styles/seat-status.scss";
+
 .container {
     width: 472px;
     border: 4px solid gray;
