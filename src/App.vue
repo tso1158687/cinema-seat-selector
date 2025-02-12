@@ -14,3 +14,10 @@ import SeatSelector from './components/SeatSelector.vue';
   align-items: center;
 }
 </style>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+</style>
